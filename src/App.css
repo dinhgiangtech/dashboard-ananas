@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    margin-top: 10px;
+  font-family: GeometricExtraBold;
+
+}
+
+
+.link{
+    text-decoration: none;
+    color: inherit;
+}
