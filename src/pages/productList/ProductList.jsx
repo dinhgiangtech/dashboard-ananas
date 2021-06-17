@@ -42,7 +42,6 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img width="60px" height="60px" src="https://ananas.vn/wp-content/uploads/Track-6_Suede_Moonphase_1500x800.jpg" alt=""/>
            {params.row.name}
           </div>
         );
@@ -99,6 +98,7 @@ export default function ProductList() {
         pageSize={8}
         checkboxSelection
       />
-    </div>
+      </div>
+
   );
 }
