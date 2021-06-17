@@ -1,7 +1,24 @@
 .newProduct {
-  flex: 4;
-}
+  width: 100%;
+  margin-left: 50px;
+  }
 
+  .left {
+    float: left;
+    width: 40%;
+  }
+
+  .right {
+    float: left;
+    width: 50%;
+    /* only for demonstration, should be removed */
+
+  }
+
+  .btSubmit {
+    clear: both;
+    margin-top: 20px;
+  }
 .addProductForm {
   margin-top: 10px;
 }
@@ -11,6 +28,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .addProductItem > label {
@@ -28,12 +46,24 @@
 }
 
 .addProductButton {
-  margin-top: 10px;
-  padding: 7px 10px;
   border: none;
-  border-radius: 10px;
-  background-color: darkblue;
+  background-color: orangered;
   color: white;
   font-weight: 600;
   cursor: pointer;
+  width: 150px;
+  height: 50px;
+  font-size: medium;
+  }
+
+  .wrapImage {
+    margin-left: 20px;
+    float: left;
+  }
+
+  .img {
+    width: 100px;
+    height: 100px;
+    resize: none;
+
 }
