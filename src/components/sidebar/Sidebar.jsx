@@ -22,9 +22,11 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">DASHBOARD</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              TRANG CHỦ
-            </li>
+          <Link to="/" className="link">
+              <li className="sidebarListItem">
+               TRANG CHỦ
+              </li>
+            </Link>
             <Link to="/users" className="link">
               <li className="sidebarListItem">
                 NGƯỜI DÙNG
@@ -35,9 +37,11 @@ export default function Sidebar() {
                 SẢN PHẨM
               </li>
             </Link>
+            <Link to="/orders" className="link">
             <li className="sidebarListItem">
               ĐƠN HÀNG
             </li>
+            </Link>
             <li className="sidebarListItem">
               BÁO CÁO
             </li>
