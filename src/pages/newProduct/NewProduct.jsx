@@ -1,13 +1,19 @@
 import "./newProduct.css";
 import { useState } from "react";
 import { storage } from "../../firebase";
+import CloseIcon from '@material-ui/icons/Close';
 export default function NewProduct() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
-  const list=[]
   const onHandleChange = (e) => {
-    setImages([...images,e.target.files[0]])
+    console.log(e.target.files[0].name)
+    setImages([...images, e.target.files[0]]);
   };
+  const removeImage=(del)=>{
+    console.log(del.name)
+    const img=images.filter((item)=>item.name!==del.name)
+    setImages(img)
+  }
   const uploadImage = () => {
     // var storageRef = storage.ref();
     // // Upload file and metadata to the object 'images/mountains.jpg'
@@ -43,70 +49,74 @@ export default function NewProduct() {
     <div className="newProduct">
       <h1 className="addProductTitle">Sản phẩm mới</h1>
       <div className="left">
-      <div className="addProductForm">
-        <div className="addProductItem">
-          <label>Tên sản phẩm</label>
-          <input type="text" placeholder="Tên sản phẩm" />
+        <div className="addProductForm">
+          <div className="addProductItem">
+            <label>Tên sản phẩm</label>
+            <input type="text" placeholder="Tên sản phẩm" />
+          </div>
+          <div className="addProductItem">
+            <label>Giá</label>
+            <input type="text" placeholder="VNĐ" />
+          </div>
+          <div className="addProductItem">
+            <label>Loại sản phẩm</label>
+            <select name="active" id="active">
+              <option value="Basas">Giày</option>
+              <option value="Vintage">Áo</option>
+              <option value="Urbas">Phụ kiện đi kèm</option>
+              <option value="Pattas">Pattas</option>
+            </select>
+          </div>
+          <div className="addProductItem">
+            <label>Trạng thái</label>
+            <select name="active" id="active">
+              <option value="New Arrive">New Arrive</option>
+              <option value="Sale Off">Sale</option>
+              <option value="Best Seller">Best Seller</option>
+            </select>
+          </div>
+        
         </div>
-        <div className="addProductItem">
-          <label>Giá</label>
-          <input type="text" placeholder="VNĐ" />
-        </div>
-        <div className="addProductItem">
-          <label>Kiểu dáng</label>
-          <select name="active" id="active">
-            <option value="Low Top">Low Top</option>
-            <option value="High Top">High Top</option>
-          </select>
-        </div>
-        </div>
-        <div>
-        <div className="addProductItem">
-          <label>Loại sản phẩm</label>
-          <input type="text" placeholder="123" />
-        </div>
+        <div></div>
       </div>
-    </div>
-
-      <div className="right">  
-        <div className="addProductItem">
-          <label>Trạng thái</label>
-          <select name="active" id="active">
-            <option value="New Arrive">New Arrive</option>
-            <option value="Sale">Sale</option>
-            <option value="Best Seller">Best Seller</option>
-          </select>
-        </div>
-        <div className="addProductItem">
-          <label>Kiểu giày</label>
-          <select name="active" id="active">
-            <option value="yes">Basas</option>
-            <option value="no">Vintage</option>
-          </select>
-        </div>
+      <div className="addProductItem">
+            <label>Kiểu dáng</label>
+            <select name="active" id="active">
+              <option value="Low Top">Low Top</option>
+              <option value="High Top">High Top</option>
+            </select>
+          </div>
+      <div className="right">
         <div className="addProductItem">
           <label>Thêm mô tả</label>
-         <textarea/>
+          <textarea  className="wrapTextArea" />
         </div>
 
-          <div className="addProductItem">
-            <label>Image</label>
-            <input type="file" id="file" onChange={(e) => onHandleChange(e)} />
-          </div>
-          {
-            images?
-            images.map((item)=>{
-              return <div className="wrapImage"><img className="img" src={URL.createObjectURL(item)} width="150px" height="150px"/></div>
-            }):null
-          }
-        
-
+        <div className="addProductItem">
+          <label>Image</label>
+          <input type="file" id="file" onChange={(e) => onHandleChange(e)} />
         </div>
-        <div className="btSubmit">
+        {images
+          ? images.map((item) => {
+              return (
+                <div className="wrapImage">
+                  <img
+                    className="img"
+                    src={URL.createObjectURL(item)}
+                    width="150px"
+                    height="150px"
+                  />
+                  <CloseIcon onClick={()=>removeImage(item)} className="icon"/>
+                </div>
+              );
+            })
+          : null}
+      </div>
+      <div className="btSubmit">
         <button onClick={uploadImage} className="addProductButton">
           THÊM SẢN PHẨM
         </button>
-        </div>
+      </div>
     </div>
   );
 }
