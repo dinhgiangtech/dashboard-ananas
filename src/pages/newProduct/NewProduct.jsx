@@ -2,11 +2,13 @@ import "./newProduct.css";
 import { useState } from "react";
 import { storage } from "../../firebase";
 import CloseIcon from '@material-ui/icons/Close';
+import InputText from "../../components/input";
 export default function NewProduct() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
+  const [name,setName]=useState('')
+  const [price,setPrice]=useState(0)
   const onHandleChange = (e) => {
-    console.log(e.target.files[0].name)
     setImages([...images, e.target.files[0]]);
   };
   const removeImage=(del)=>{
@@ -45,19 +47,22 @@ export default function NewProduct() {
     //   }
     // );
   };
+  const onChangeName=(value)=>{
+    setName(value)
+  }
+  const onChangePrice=(value)=>{
+    const priceValid= value.replace(/\+|-/ig, '');
+    setPrice(priceValid)
+    console.log(priceValid)
+
+  }
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">Sản phẩm mới</h1>
       <div className="left">
         <div className="addProductForm">
-          <div className="addProductItem">
-            <label>Tên sản phẩm</label>
-            <input type="text" placeholder="Tên sản phẩm" />
-          </div>
-          <div className="addProductItem">
-            <label>Giá</label>
-            <input type="text" placeholder="VNĐ" />
-          </div>
+                <InputText label={"Tên sản phẩm"} value={name} onChange={onChangeName}></InputText>
+                <InputText type="number" label={"Giá"}  value={name} onChange={onChangePrice} ></InputText>
           <div className="addProductItem">
             <label>Loại sản phẩm</label>
             <select name="active" id="active">
@@ -75,21 +80,20 @@ export default function NewProduct() {
               <option value="Best Seller">Best Seller</option>
             </select>
           </div>
-        
         </div>
         <div></div>
       </div>
       <div className="addProductItem">
-            <label>Kiểu dáng</label>
-            <select name="active" id="active">
-              <option value="Low Top">Low Top</option>
-              <option value="High Top">High Top</option>
-            </select>
-          </div>
+        <label>Kiểu dáng</label>
+        <select name="active" id="active">
+          <option value="Low Top">Low Top</option>
+          <option value="High Top">High Top</option>
+        </select>
+      </div>
       <div className="right">
         <div className="addProductItem">
           <label>Thêm mô tả</label>
-          <textarea  className="wrapTextArea" />
+          <textarea className="wrapTextArea" />
         </div>
 
         <div className="addProductItem">
@@ -106,7 +110,10 @@ export default function NewProduct() {
                     width="150px"
                     height="150px"
                   />
-                  <CloseIcon onClick={()=>removeImage(item)} className="icon"/>
+                  <CloseIcon
+                    onClick={() => removeImage(item)}
+                    className="icon"
+                  />
                 </div>
               );
             })
