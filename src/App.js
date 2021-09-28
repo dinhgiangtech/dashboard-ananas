@@ -10,11 +10,16 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import { useEffect } from "react";
-import {db} from './firebase'
+import { db } from './firebase'
+import React, { Component } from 'react';
 function App() {
-  useEffect(()=>{
-    console.log(db.collection("user"))
-  },[])
+  useEffect(() => {
+    db.collection("users").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+    });
+  }, [])
   return (
     <Router>
       <Topbar />
