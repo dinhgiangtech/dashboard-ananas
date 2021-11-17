@@ -1,10 +1,29 @@
-import { Link } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useParams
+} from "react-router-dom";
 import './product.css';
 import Chart from '../../components/chart/Chart';
 import { productData } from '../../dummyData';
 import { Publish } from '@material-ui/icons';
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import { db } from "../../firebase";
 export default function Product() {
+	const { productId } = useParams()
+	const [data,setData] = useState({});
+	useEffect(() => {
+		fetchProduct()
+		console.log('dddd',productId)
+
+	}, [productId])
+	const fetchProduct = async () => {
+		console.log('dddd',productId)
+		await db.collection("products").doc(productId).get().
+			then(doc =>setData(doc.data()))
+	}
 	return (
 		<div className="product">
 			<div className="productTitleContainer">
@@ -14,9 +33,9 @@ export default function Product() {
 				</Link>
 			</div>
 			<div className="productTop">
-				<div className="productTopLeft">
+				{/* <div className="productTopLeft">
 					<Chart data={productData} dataKey="Sales" title="Sales Performance" />
-				</div>
+				</div> */}
 				<div className="productTopRight">
 					<div className="productInfoTop">
 						<img
@@ -24,7 +43,7 @@ export default function Product() {
 							alt=""
 							className="productInfoImg"
 						/>
-						<span className="productName">Apple Airpods</span>
+						<span className="productName">{data?data.fashion:''}</span>
 					</div>
 					<div className="productInfoBottom">
 						<div className="productInfoItem">

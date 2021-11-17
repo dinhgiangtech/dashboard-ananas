@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState } from "react";
+import React, { Component,useState }  from 'react';
 export default function InputText({ label, onChange, type }) {
   const handleChange = (value) => {
     onChange(value);

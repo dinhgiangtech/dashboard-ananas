@@ -5,9 +5,29 @@ import { productRows } from '../../dummyData';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React, { Component } from 'react';
+import { db } from '../../firebase'
 export default function ProductList() {
-	const [ data, setData ] = useState(productRows);
-
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		fetchListProduct()
+	}, [])
+	const fetchListProduct = async () => {
+		// let list = []
+		await db.collection('products')
+			.get()
+			.then(querySnapshot => {
+				let list=querySnapshot.docs.map((doc)=>{
+					console.log(doc.data())
+					return {
+						id:doc.id,
+						image: Object.values(doc.data().image),
+						name:doc.data().name,
+						price:doc.data().price
+					}
+				})
+				setData(list)
+			});
+	}
 	const handleDelete = (id) => {
 		setData(data.filter((item) => item.id !== id));
 	};
@@ -17,11 +37,12 @@ export default function ProductList() {
 		{
 			field: 'product',
 			headerName: 'Product',
-			width: 200,
+			width: 300,
 			renderCell: (params) => {
+				// console.log('image', params.row.image)
 				return (
 					<div className="productListItem">
-						<img className="productListImg" src={params.row.img} alt="" />
+						<img className="productListImg" src={params.row.image[1]} />
 						{params.row.name}
 					</div>
 				);
@@ -48,7 +69,9 @@ export default function ProductList() {
 						<Link to={'/product/' + params.row.id}>
 							<button className="productListEdit">Edit</button>
 						</Link>
-						<DeleteOutline className="productListDelete" onClick={() => handleDelete(params.row.id)} />
+						{/* <Link to={'/product/' + params.row.id}> */}
+							<DeleteOutline className="productListDelete" onClick={() => handleDelete(params.row.id)} />
+						{/* </Link> */}
 					</div>
 				);
 			}
@@ -60,7 +83,7 @@ export default function ProductList() {
 			<Link to="/newproduct">
 				<button className="Button">THÊM SẢN PHẨM</button>
 			</Link>
-			<DataGrid rows={data} disableSelectionOnClick columns={columns} pageSize={8} checkboxSelection />
+			{data.length > 0 && <DataGrid rows={data} disableSelectionOnClick columns={columns} pageSize={8} checkboxSelection />}
 		</div>
 	);
 }

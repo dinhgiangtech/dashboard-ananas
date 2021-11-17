@@ -10,6 +10,7 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Orders from "./pages/orders/Orders";
+import UpdateProduct from "./pages/editProduct/NewProduct";
 import { useEffect } from "react";
 import { db } from './firebase'
 import React, { Component } from 'react';
@@ -47,6 +48,9 @@ function App() {
           </Route>
           <Route path="/newproduct">
             <NewProduct />
+          </Route>
+          <Route path="/updateProduct">
+            <UpdateProduct />
           </Route>
           <Route path="/orders">
             <Orders />

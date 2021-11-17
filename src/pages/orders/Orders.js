@@ -1,4 +1,5 @@
 import "./orders.css";
+import React, { Component }  from 'react';
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { productRows } from "../../dummyData";
@@ -62,11 +63,11 @@ export default function Orders() {
       width: 150,
       renderCell: (params) => {
         return (
-          <>
+          
             <Link to={"/product/" + params.row.id}>
               <button className="productListEdit">CHI TIẾT</button>
             </Link>
-          </>
+          
         );
       },
     },

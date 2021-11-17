@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import InputText from "../../components/input"
 import React, { Component,useState }  from 'react';
 
-export default function NewProduct() {
+export default function UpdateProduct() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
   const [name,setName]=useState('')
