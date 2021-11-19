@@ -44,8 +44,12 @@ export default function Product() {
 		
 	}
 	const handleChange=(event)=>{
-		// console.log(event.target)
 		setStatus(event.target.value)
+	}
+	const update=async()=>{
+		
+
+
 	}
 	return (
 		<div className="product">
@@ -117,7 +121,7 @@ export default function Product() {
 							</label>
 							<input type="file" id="file" style={{ display: 'none' }} />
 						</div>
-						<button className="productButton">Update</button>
+						<button onClick={updateInfor} className="productButton">Update</button>
 					</div>
 				</form>
 			</div>
