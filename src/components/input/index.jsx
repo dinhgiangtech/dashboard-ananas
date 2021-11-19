@@ -1,6 +1,6 @@
 import "./style.css";
 import React, { Component,useState }  from 'react';
-export default function InputText({ label, onChange, type }) {
+export default function InputText({ label, onChange,error, type }) {
   const handleChange = (value) => {
     onChange(value);
   };
@@ -15,6 +15,7 @@ export default function InputText({ label, onChange, type }) {
         type={type}
         placeholder="Tên sản phẩm"
       />
+      <span className="addProductItem">{error}</span>
     </div>
   );
 }

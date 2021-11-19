@@ -3,3 +3,7 @@
       font-weight: 600;
       margin-bottom: 10px;
 }
+.textError{
+      color:'#FF0000';
+      font-size:20;
+}
