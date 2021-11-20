@@ -2,31 +2,30 @@
   width: 100%;
   margin-left: 50px;
   padding-bottom: 200px;
-  }
+}
 
-  .left {
-    float: left;
-    width: 40%;
-    height: 440px;
-  }
+.left {
+  float: left;
+  width: 40%;
+  height: 440px;
+}
 
-  .right {
-    float: left;
-    width: 50%;
-    height: 200px;
-    /* only for demonstration, should be removed */
+.right {
+  float: left;
+  width: 50%;
+  height: 200px;
+  /* only for demonstration, should be removed */
+}
 
-  }
-
-  .btSubmit {
-    clear: both;
-    margin-top: 20px;
-    }
+.btSubmit {
+  clear: both;
+  margin-top: 20px;
+}
 .btSubmit:active::after {
   padding: 0;
   margin: 0;
   opacity: 1;
-  transition: 0s
+  transition: 0s;
 }
 .addProductForm {
   margin-top: 10px;
@@ -64,30 +63,29 @@
   height: 50px;
   font-size: medium;
   margin-top: 200px;
-  }
+}
 
-  .wrapImage {
-    margin-left: 20px;
-    float: left;
-  }
+.wrapImage {
+  margin-left: 20px;
+  float: left;
+}
 
-  .img {
-    width: 100px;
-    height: 100px;
-    resize: none;
-    /* position: absolute; */
+.img {
+  max-width: 100%;
+  height: auto;
+  resize: none;
+  /* position: absolute; */
+}
 
-    }
+.wrapTextArea {
+  width: 100%;
+  height: 150px;
+  border-width: 1;
+}
 
-    .wrapTextArea {
-      width: 100%;
-      height: 150px;
-      border-width: 1;
-    }
-
-    .icon {
-      /* position: relative;
+.icon {
+  /* position: relative;
       bottom: 80px;
       left: 90px; */
-      margin-bottom: 90%;
-    }
+  margin-bottom: 90%;
+}

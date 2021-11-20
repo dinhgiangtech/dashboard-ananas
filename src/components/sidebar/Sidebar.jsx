@@ -29,8 +29,10 @@ export default function Sidebar() {
 						<Link to="/products" className="link">
 							<li className="sidebarListItem">SẢN PHẨM</li>
 						</Link>
+						<Link to="/orders">
 						<li className="sidebarListItem">ĐƠN HÀNG</li>
-						<li className="sidebarListItem">BÁO CÁO</li>
+						</Link>
+						{/* <li className="sidebarListItem">BÁO CÁO</li> */}
 					</ul>
 				</div>
 			</div>

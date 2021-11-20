@@ -16,6 +16,8 @@ const validatePrice = (number) => {
   }
   return false;
 };
+let sizeShoe = Object.assign({}, [35, 36, 37, 38]);
+let sizeShirt = Object.assign({}, ["M", "L", "S", "X"]);
 export default function NewProduct() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
@@ -25,20 +27,26 @@ export default function NewProduct() {
   const [errorName, setErrorName] = useState("");
   const [errorPrice, setErrorPrice] = useState("");
   const [errorDes, setErrorDes] = useState("");
-  const [dataType,setDataType] = useState([])
-
-  const [fashion,setFashion] = useState("")
+  const [dataType, setDataType] = useState([]);
+  const [style, setStyle] = useState("High Top");
+  const [fashion, setFashion] = useState("Shoe");
+  const [status,setStatus] = useState("New Arrive");
+  const [type,setType] = useState("Basas")
   const onHandleChange = (e) => {
     console.log(e.target.files[0]);
     setImages([...images, e.target.files[0]]);
   };
-  const onChangeFashion=(value)=>{
-    console.log(value.target.value)
-    setFashion(value.target.value)
-  }
+  const onChangeFashion = (value) => {
+    console.log(value.target.value);
+    setFashion(value.target.value);
+  };
   const removeImage = (del) => {
     const img = images.filter((item) => item.name !== del.name);
     setImages(img);
+  };
+  const onChangeDescription = (e) => {
+    console.log(e.target.value);
+    setDes(e.target.value);
   };
   const uploadImage = async () => {
     let checkName = isNotEmpty(name);
@@ -52,22 +60,40 @@ export default function NewProduct() {
       if (images.length > 0) {
         const promises = images.map((image) => {
           const ref = storage.ref().child(`images/${image.name}`);
-          return ref.put(image.uploadTask).then(() => ref.getDownloadURL());
+          return ref.put(image).then(() => ref.getDownloadURL());
         });
-
         Promise.all(promises)
           .then((fileDownloadUrls) => {
-            console.log(Object.assign({}, fileDownloadUrls))
-            // console.log()
-            // db.collection("products").add({
-            //   // timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            //   // title: title,
-            //   // description: description,
-            //   // pictures: fileDownloadUrls,
-            //   // user: user.uid,
-            // });
-          })
-          .catch((err) => console.log(err));
+            console.log(Object.assign({}, fileDownloadUrls));
+            let size = fashion === "Shoe" ? sizeShoe : sizeShirt;
+            // let ob = {
+            //   name: name,
+            //   price: price,
+            //   description: des,
+            //   image: Object.assign({}, fileDownloadUrls),
+            //   fashion: fashion,
+            //   style: fashion==="Shoe"?style:"",
+            //   size: fashion === "accessories" ? "free" : size,
+            //   status:status,
+            //   realprice:0,
+            //   type:type
+            // }
+            // console.log(ob);
+
+            db.collection("products").add({
+              name: name,
+              price: price,
+              description: des,
+              image: Object.assign({}, fileDownloadUrls),
+              fashion: fashion,
+              style: style,
+              size: fashion === "accessories" ? "free" : size,
+              status:status,
+              realprice:0,
+              type:type
+            }).then(()=>alert("Đã đặt hàng thành công"));
+          }).then(()=>{})
+          .catch((err)=>alert("Đã xảy ra sự cố"));
       }
     }
   };
@@ -79,16 +105,26 @@ export default function NewProduct() {
     setPrice(priceValid);
     console.log(priceValid);
   };
-  const loadType=useMemo(()=>{
-    if(fashion==="shirt")
-    {
-      return setDataType(["Graphic Tee","SweetShirt","Hoodie"])
+  const loadType = useMemo(() => {
+    if (fashion === "shirt") {
+      setDataType(["Graphic Tee", "SweetShirt", "Hoodie"]);
+      return dataType.map((value) => {
+        return <option value={value}>{value}</option>;
+      });
     }
-    if(fashion==="Shoe")
-    {
-      return setDataType(["Basas","Vintage","Urbas","Pattas"])
+    if (fashion === "Shoe") {
+      setDataType(["Basas", "Vintage", "Urbas", "Pattas"]);
+      return dataType.map((value) => {
+        return <option value={value}>{value}</option>;
+      });
     }
-  },[fashion])
+    if (fashion === "accessories") {
+      setDataType(["Hat"]);
+      return dataType.map((value) => {
+        return <option value={value}>{value}</option>;
+      });
+    }
+  }, [fashion]);
 
   return (
     <div className="newProduct">
@@ -110,7 +146,12 @@ export default function NewProduct() {
           ></InputText>
           <div className="addProductItem">
             <label>Loại sản phẩm</label>
-            <select onChange={onChangeFashion} value={fashion} name="active" id="active">
+            <select
+              onChange={onChangeFashion}
+              value={fashion}
+              name="active"
+              id="active"
+            >
               <option value="shirt">Áo</option>
               <option value="Shoe">Giày</option>
               <option value="accessories">Phụ kiện đi kèm</option>
@@ -119,16 +160,20 @@ export default function NewProduct() {
           </div>
           <div className="addProductItem">
             <label>Kiểu mẫu</label>
-            <select name="active" id="active">
-              <option value="Basas">Giày</option>
-              <option value="Vintage">Áo</option>
-              <option value="Urbas">Phụ kiện đi kèm</option>
-              <option value="Pattas">Pattas</option>
+            <select onChange={(e)=>setType(e.target.value)} value={type} name="active" id="active">
+              {/* {loadType} */}
+              {dataType.map((value) => {
+                return <option value={value}>{value}</option>;
+              })}
+              {/* <option value="Basas">Basas</option>
+              <option value="Vintage">Vintage</option>
+              <option value="Urbas">Urbas</option>
+              <option value="Pattas">Pattas</option> */}
             </select>
           </div>
           <div className="addProductItem">
             <label>Trạng thái</label>
-            <select name="active" id="active">
+            <select onChange={(e)=>setStatus(e.target.value)} value={status} name="active" id="active">
               <option value="New Arrive">New Arrive</option>
               <option value="Sale Off">Sale</option>
               <option value="Best Seller">Best Seller</option>
@@ -139,15 +184,28 @@ export default function NewProduct() {
       </div>
       <div className="addProductItem">
         <label>Kiểu dáng</label>
-        <select name="active" id="active">
+        <select
+          onChange={(e) => setStyle(e.target.value)}
+          value={style}
+          name="active"
+          id="active"
+        >
           <option value="Low Top">Low Top</option>
           <option value="High Top">High Top</option>
+        </select>
+      </div>
+      <div className="addProductItem">
+        <label>Size</label>
+        <select name="active" id="active">
+          <option value="Shoe">42 43 44 45 46</option>
+          <option value="shirt">M L S </option>
+          <option value="accessories">Free</option>
         </select>
       </div>
       <div className="right">
         <div className="addProductItem">
           <label>Thêm mô tả</label>
-          <textarea className="wrapTextArea" />
+          <textarea onChange={onChangeDescription} className="wrapTextArea" />
           <span>{errorDes}</span>
         </div>
 
@@ -159,12 +217,7 @@ export default function NewProduct() {
           ? images.map((item) => {
               return (
                 <div className="wrapImage">
-                  <img
-                    className="img"
-                    src={URL.createObjectURL(item)}
-                    width="150px"
-                    height="150px"
-                  />
+                  <img className="img" src={URL.createObjectURL(item)} />
                   <CloseIcon
                     onClick={() => removeImage(item)}
                     className="icon"
@@ -180,6 +233,5 @@ export default function NewProduct() {
         </button>
       </div>
     </div>
-    
   );
 }
