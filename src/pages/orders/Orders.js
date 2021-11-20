@@ -23,7 +23,7 @@ export default function Orders() {
             id: doc.id,
             user: doc.data().fname + " " + doc.data().lname,
             price: doc.data().price,
-            status: "Đang vận chuyển",
+            status: doc.data().statusConfirm?"ĐANG GIAO":"CHỜ XÁC NHẬN",
             address: doc.data().address,
           });
         });
@@ -60,14 +60,15 @@ export default function Orders() {
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: 400,
       renderCell: (params) => {
         return (
-          
-            <Link to={"/product/" + params.row.id}>
+          <div>
+            <Link to={"/detail/" + params.row.id}>
               <button className="productListEdit">CHI TIẾT</button>
             </Link>
-          
+             {/* {params.row.id===""<button className="productListEdit">CHI TIẾT</button>} */}
+          </div>
         );
       },
     },

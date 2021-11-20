@@ -12,16 +12,19 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import Orders from "./pages/orders/Orders";
 import UpdateProduct from "./pages/editProduct/NewProduct";
 import { useEffect } from "react";
-import { db } from './firebase'
-import React, { Component } from 'react';
+import { db } from "./firebase";
+import React, { Component } from "react";
+import DeatailOrder from "./pages/DetailOrder/DetailOrder";
 function App() {
   useEffect(() => {
-    db.collection("users").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
+    db.collection("users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+        });
       });
-    });
-  }, [])
+  }, []);
   return (
     <Router>
       <Topbar />
@@ -54,6 +57,9 @@ function App() {
           </Route>
           <Route path="/orders">
             <Orders />
+          </Route>
+          <Route path="/detail/:orderId">
+            <DeatailOrder />
           </Route>
         </Switch>
       </div>

@@ -60,7 +60,7 @@ export default function NewProduct() {
       if (images.length > 0) {
         const promises = images.map((image) => {
           const ref = storage.ref().child(`images/${image.name}`);
-          return ref.put(image.uploadTask).then(() => ref.getDownloadURL());
+          return ref.put(image).then(() => ref.getDownloadURL());
         });
         Promise.all(promises)
           .then((fileDownloadUrls) => {
@@ -91,8 +91,8 @@ export default function NewProduct() {
               status:status,
               realprice:0,
               type:type
-            });
-          }).then(()=>alert("Thêm sản phẩm thành công"))
+            }).then(()=>alert("Đã đặt hàng thành công"));
+          }).then(()=>{})
           .catch((err)=>alert("Đã xảy ra sự cố"));
       }
     }
