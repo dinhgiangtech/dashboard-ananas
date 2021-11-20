@@ -15,7 +15,7 @@ export default function InputText({ label, onChange,error, type }) {
         type={type}
         placeholder="Tên sản phẩm"
       />
-      <span className="addProductItem">{error}</span>
+      {error&&<span className="addProductItem">{error}</span>}
     </div>
   );
 }
