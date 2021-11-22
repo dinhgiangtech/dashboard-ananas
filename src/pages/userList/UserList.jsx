@@ -6,9 +6,30 @@ import { userRows } from '../../dummyData';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import React, { Component } from 'react';
+import { db } from "../../firebase";
+import moment from 'moment';
 export default function UserList() {
-	const [ data, setData ] = useState(userRows);
-
+	const [ data, setData ] = useState([]);
+	useEffect(()=>{
+		fetchListProduct()
+	},[])
+	const fetchListProduct = async () => {
+		// let list = []
+		await db
+		  .collection("users")
+		  .get()
+		  .then((querySnapshot) => {
+			let list = querySnapshot.docs.map((doc) => {
+			  console.log(doc.data());
+			  return {
+				id:doc.id,
+				email: doc.data().email,
+			  };
+			});
+			console.log(list)
+			setData(list);
+		  });
+	  };
 	const handleDelete = (id) => {
 		setData(data.filter((item) => item.id !== id));
 	};
@@ -23,21 +44,8 @@ export default function UserList() {
 				return <EmailOutlinedIcon className="userListDelete" onClick={() => handleDelete(params.row.id)} />;
 			}
 		},
-		{ field: 'createAt', headerName: 'Ngày đăng kí', width: 180 },
 
-		{ field: 'uid', headerName: 'UID', width: 200 },
-		{
-			field: 'action',
-			headerName: 'Action',
-			width: 150,
-			renderCell: (params) => {
-				return (
-					<div>
-						<DeleteOutline className="userListDelete" onClick={() => handleDelete(params.row.id)} />
-					</div>
-				);
-			}
-		}
+		{ field: 'id', headerName: 'UID', width: 200 },
 	];
 
 	return (

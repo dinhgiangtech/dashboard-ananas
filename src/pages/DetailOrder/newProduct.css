@@ -1,0 +1,121 @@
+.newProduct {
+  width: 100%;
+  margin-left: 50px;
+  padding-bottom: 200px;
+  }
+
+  .left {
+    float: left;
+    width: 40%;
+    height: 440px;
+    margin-bottom: 40px;
+    padding-top: 20px;
+  }
+
+  .right {
+    float: left;
+    width: 50%;
+    height: 200px;
+    /* only for demonstration, should be removed */
+
+  }
+
+  .btSubmit {
+    clear: both;
+    margin-top: 20px;
+    }
+.btSubmit:active::after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+.addProductForm {
+  margin-top: 30px;
+}
+.item{
+  margin-top: 10px;
+}
+
+.addProductItem {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.addProductItem > label {
+  color: gray;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.label{
+  color: gray;
+  font-weight: 600;
+  margin-bottom: 100px;
+  height: 100px;
+  margin-right: 15px;
+}
+.wrapItem{
+  height: 40px;
+}
+.wrapProduct{
+  width: 600px;
+  margin-bottom: 20px;
+}
+.addProductItem > input {
+  padding: 10px;
+}
+
+.addProductItem > select {
+  padding: 10px;
+}
+
+.addProductButton {
+  border: none;
+  background-color: orangered;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  font-size: medium;
+  }
+
+  .wrapImage {
+    margin-left: 20px;
+    float: left;
+  }
+
+  .img {
+    width: 100px;
+    height: 100px;
+    resize: none;
+    /* position: absolute; */
+
+    }
+
+    .wrapTextArea {
+      width: 100%;
+      height: 150px;
+      border-width: 1;
+    }
+
+    .icon {
+      /* position: relative;
+      bottom: 80px;
+      left: 90px; */
+      margin-bottom: 90%;
+    }
+    .productListEdit {
+      border: none;
+      background-color: orangered;
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+      width: 150px;
+  }
+  .name{
+    margin-left: 40px;
+  }

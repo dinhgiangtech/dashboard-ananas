@@ -1,5 +1,5 @@
 import "./orders.css";
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { productRows } from "../../dummyData";
@@ -9,6 +9,7 @@ import { db } from "../../firebase";
 export default function Orders() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("")
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
@@ -23,17 +24,46 @@ export default function Orders() {
             id: doc.id,
             user: doc.data().fname + " " + doc.data().lname,
             price: doc.data().price,
-            status: doc.data().statusConfirm?"ĐANG GIAO":"CHỜ XÁC NHẬN",
+            status: doc.data().statusConfirm ? "ĐANG GIAO" : "XÁC NHẬN GIAO",
             address: doc.data().address,
+            number: doc.data().number
           });
+          // doc.data().statusConfirm ? setStatus("ĐANG GIAO") : setStatus("CHỜ XÁC NHẬN")
         });
         setData(list);
         setLoading(false);
       });
   }, []);
+  const confirmOrder = (id) => {
+    db.collection("order").doc(id)
+      .update({
+        statusConfirm: true
+      })
+      .then(() => {
+        // setStatus("ĐANG GIAO");
+        changeStatus(id)
+        alert("Đơn hàng đã xác nhận giao")
+      }
+      )
+      .catch(()=>{
+        alert("Đã xảy ra lỗi")
+      })
+  }
+  const changeStatus=(id)=>{
+    const list = data.map((item)=>{
+      if(item.id===id)
+      {
+        return{
+          ...item,
+          status:"ĐANG GIAO"
+        }
+      }
+    })
+    setData(list)
+  }
   const columns = [
     {
-      field: "id",
+      field: "number",
       headerName: "Mã đơn hàng",
       width: 200,
     },
@@ -65,9 +95,10 @@ export default function Orders() {
         return (
           <div>
             <Link to={"/detail/" + params.row.id}>
-              <button className="productListEdit">CHI TIẾT</button>
+              <button className="productListDelete">CHI TIẾT</button>
             </Link>
-             {/* {params.row.id===""<button className="productListEdit">CHI TIẾT</button>} */}
+            {params.row.status === "XÁC NHẬN GIAO" ? <button onClick={() => confirmOrder(params.row.id)} className="productListEdit">XÁC NHẬN GIAO</button> 
+            : <button className="productListDelete">ĐANG GIAO</button>}
           </div>
         );
       },

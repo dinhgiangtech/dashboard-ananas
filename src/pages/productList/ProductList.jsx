@@ -24,13 +24,13 @@ export default function ProductList() {
             image: Object.values(doc.data().image),
             name: doc.data().name,
             price: doc.data().price,
+            status:doc.data().status
           };
         });
         setData(list);
       });
   };
   const handleDelete = (id) => {
-    // setData(data.filter((item) => item.id !== id));
     db.collection("products")
       .doc(id)
       .delete()
@@ -42,11 +42,11 @@ export default function ProductList() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    // { field: "id", headerName: "ID", width: 90 },
     {
       field: "product",
       headerName: "Product",
-      width: 300,
+      width: 400,
       renderCell: (params) => {
         // console.log('image', params.row.image)
         return (
@@ -57,7 +57,7 @@ export default function ProductList() {
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
+    // { field: "stock", headerName: "Stock", width: 200 },
     {
       field: "status",
       headerName: "Status",
@@ -76,7 +76,7 @@ export default function ProductList() {
         return (
           <div>
             <Link to={"/product/" + params.row.id}>
-              <button className="productListEdit">Edit</button>
+              <button className="productListEdit">CHỈNH SỬA</button>
             </Link>
             <DeleteOutline
               className="productListDelete"
